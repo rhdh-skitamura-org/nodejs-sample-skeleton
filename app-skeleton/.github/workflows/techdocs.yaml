@@ -40,7 +40,7 @@ jobs:
         with:
           python-version: '3.9'
 
-     - name: echo variables
+      - name: echo variables
         run: |
           echo $TECHDOCS_S3_BUCKET_NAME
           echo $AWS_ACCESS_KEY_ID
