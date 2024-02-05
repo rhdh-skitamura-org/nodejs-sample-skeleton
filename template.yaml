@@ -87,7 +87,7 @@ spec:
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
           description: ${{ parameters.description }}
-          bucket: '"\${{ secrets.BUCKET_NAME }}"'
+          bucket: '\$\{\{ secrets.BUCKET_NAME \}\}'
         targetPath: ./tenant-app
 
     - id: publish-app-to-github
