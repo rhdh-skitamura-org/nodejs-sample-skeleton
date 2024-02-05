@@ -17,8 +17,8 @@ jobs:
       TECHDOCS_S3_BUCKET_NAME: ${{ values.bucket_name }}
       AWS_ACCESS_KEY_ID: ${{ values.aws_access_key_id }}
       AWS_SECRET_ACCESS_KEY: ${{ values.aws_secret_access_key }}
-      #AWS_REGION: ap-northeast-1
-      AWS_ENDPOINT: 'https://s3.ap-northeast-1.amazonaws.com' 
+      AWS_REGION: ap-northeast-1
+      AWS_ENDPOINT: 's3-ap-northeast-1.amazonaws.com' 
       ENTITY_NAMESPACE: 'default'
       ENTITY_KIND: 'Component'
       ENTITY_NAME: 'BACKSTAGE_COMPONENT_NAME'
@@ -51,4 +51,5 @@ jobs:
         run: techdocs-cli generate --no-docker --verbose
 
       - name: Publish docs site
+        #run: techdocs-cli publish --publisher-type awsS3 --storage-name $TECHDOCS_S3_BUCKET_NAME --awsEndpoint $AWS_ENDPOINT --awsS3ForcePathStyle --entity $ENTITY_NAMESPACE/$ENTITY_KIND/$ENTITY_NAME
         run: techdocs-cli publish --publisher-type awsS3 --storage-name $TECHDOCS_S3_BUCKET_NAME --awsEndpoint $AWS_ENDPOINT --awsS3ForcePathStyle --entity $ENTITY_NAMESPACE/$ENTITY_KIND/$ENTITY_NAME
