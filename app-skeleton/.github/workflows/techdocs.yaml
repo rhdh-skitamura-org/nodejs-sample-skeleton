@@ -40,6 +40,12 @@ jobs:
         with:
           python-version: '3.9'
 
+     - name: echo variables
+        run: |
+          echo $TECHDOCS_S3_BUCKET_NAME
+          echo $AWS_ACCESS_KEY_ID
+          echo $AWS_SECRET_ACCESS_KEY 
+
       - name: Install techdocs-cli
         run: sudo npm install -g @techdocs/cli
 
