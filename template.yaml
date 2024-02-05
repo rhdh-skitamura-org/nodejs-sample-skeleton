@@ -96,7 +96,7 @@ spec:
       name: Publish App Repository to GitHub
       action: publish:github
       input:
-        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}
         repoVisibility: public
         sourcePath: ./tenant-app
         defaultBranch: develop
