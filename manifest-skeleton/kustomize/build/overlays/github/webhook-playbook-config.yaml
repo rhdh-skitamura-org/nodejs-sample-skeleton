@@ -10,7 +10,7 @@ data:
       vars:
         git_host_url: ${{ values.git_host_url }}
         git_owner: ${{ values.git_owner_name }}
-        git_repo: ${{ values.app_name }}-app
+        git_repo: ${{ values.app_name }}
         webhook_url: "webhook-${{ values.app_name }}-el-${{ values.app_name }}-develop" 
       tasks:
         - name: Get current webhook
