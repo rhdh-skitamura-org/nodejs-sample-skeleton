@@ -15,7 +15,7 @@ metadata:
     github.com/project-slug: ${{ values.git_owner_name }}/${{ values.app_name }}-app
     sonarqube.org/project-key: ${{ values.app_name }}
 spec:
-  type: service 
+  type: api 
   system: ${{ values.system | dump }}
   lifecycle: production
   owner: ${{ values.owner | dump }}
