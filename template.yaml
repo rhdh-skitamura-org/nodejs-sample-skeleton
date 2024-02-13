@@ -45,12 +45,10 @@ spec:
         sonarqube_username:
           type: string
           ui:widget: hidden
-          ui:field: Secret
           default: "admin"
         sonarqube_password:
           type: string
           ui:widget: hidden
-          ui:field: Secret
           default: "adminadmin"
 
     - title: Provide information about the git to used
@@ -166,8 +164,8 @@ spec:
         name: ${{ parameters.app_name }}
         key: ${{ parameters.app_name }}
         branch: main
-        username: ${{ secrets.sonarqube_username }}
-        password: ${{ secrets.sonarqube_password }}
+        username: ${{ parameters.sonarqube_username }}
+        password: ${{ parameters.sonarqube_password }}
 
   output:
     links:
