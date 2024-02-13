@@ -44,10 +44,12 @@ spec:
                 - System
         sonarqube_username:
           type: string
+          ui:field: Secret
           ui:widget: hidden
           default: "admin"
         sonarqube_password:
           type: string
+          ui:field: Secret
           ui:widget: hidden
           default: "adminadmin"
 
@@ -164,8 +166,8 @@ spec:
         name: ${{ parameters.app_name }}
         key: ${{ parameters.app_name }}
         branch: main
-        username: ${{ parameters.sonarqube_username }}
-        password: ${{ parameters.sonarqube_password }}
+        username: ${{ secrets.sonarqube_username }}
+        password: ${{ secrets.sonarqube_password }}
 
   output:
     links:
