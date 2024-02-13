@@ -148,6 +148,15 @@ spec:
         repoUrl: https://${{ parameters.git_host_url }}/${{ parameters.git_owner_name }}/${{ parameters.app_name }}-manifest.git
         path: 'argocd/'
 
+    - id: create-sonarqube-project
+      name: Create Sonarqube Project
+      action: sonarqube:create-project
+      input:
+        baseUrl: http://sonarqube-sonarqube.sonarqube.svc:9000
+        name: ${{ parameters.app_name }}
+        key: ${{ parameters.app_name }}
+        branch: main
+
   output:
     links:
       - title: Open the Source Code Repository
