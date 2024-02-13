@@ -42,6 +42,14 @@ spec:
             catalogFilter:
               kind:
                 - System
+        sonarqube_username:
+          type: string
+          ui:widget: hidden
+          default: "admin"
+        sonarqube_password:
+          type: string
+          ui:widget: hidden
+          default: "adminadmin"
 
     - title: Provide information about the git to used
       required:
@@ -156,6 +164,9 @@ spec:
         name: ${{ parameters.app_name }}
         key: ${{ parameters.app_name }}
         branch: main
+        username: ${{ parameters.sonarqube_username }}
+        password: ${{ parameters.sonarqube_password }}
+
   output:
     links:
       - title: Open the Source Code Repository
