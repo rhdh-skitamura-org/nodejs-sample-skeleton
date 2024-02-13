@@ -71,6 +71,8 @@ spec:
     params:
     - name: SONAR_HOST_URL
       value: 'http://sonarqube-sonarqube.sonarqube.svc:9000'
+    - name: SONAR_PROJECT_KEY
+      value: ${{ values.app_name }}
     workspaces:
     - name: source
       workspace: shared-workspace
