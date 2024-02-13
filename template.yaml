@@ -44,13 +44,13 @@ spec:
                 - System
         sonarqube_username:
           type: string
-          ui:field: Secret
           ui:widget: hidden
+          ui:field: Secret
           default: "admin"
         sonarqube_password:
           type: string
-          ui:field: Secret
           ui:widget: hidden
+          ui:field: Secret
           default: "adminadmin"
 
     - title: Provide information about the git to used
