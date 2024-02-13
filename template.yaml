@@ -156,7 +156,6 @@ spec:
         name: ${{ parameters.app_name }}
         key: ${{ parameters.app_name }}
         branch: main
-
   output:
     links:
       - title: Open the Source Code Repository
