@@ -9,7 +9,7 @@ metadata:
   - url: https://openshift-gitops-server-openshift-gitops.${{ values.cluster_url }}
     title: ArgoCD
     icon: dashboard
-  - url: https://${{ values.app_name }}-${{ values.app_name }}-develop.${{ values.cluster_url }}
+  - url: https://${{ values.app_name }}-${{ values.app_name }}-develop.${{ values.cluster_url }}/applications/openshift-gitops/${{ values.app_name }}-dev
     title: Application
     icon: dashboard
   annotations:
