@@ -80,15 +80,10 @@ spec:
                   default: github.com
                   description: Specify the GitHub or GitLab host URL(e.g., github.com)
                 git_owner_name:
-                  title: GitHub Team Name or User Name
+                  title: GitHub Organization Name or User Name
                   type: string
-                  description: Specify the GitHub Team or User to register the repository
-                  ui:field: OwnerPicker
-                  ui:options:
-                    catalogFilter:
-                      kind:
-                        - Group
-                        - User
+                  description: Specify the GitHub Organization or User to register the repository
+                  default: rhdh-skitamura-org
   steps:
     - id: app-template
       name: Generating the Application Source Code Component
