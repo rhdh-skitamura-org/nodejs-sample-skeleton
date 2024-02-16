@@ -82,7 +82,7 @@ spec:
                 git_owner_name:
                   title: GitHub Organization Name or User Name
                   type: string
-                  description: Specify the GitHub Organization or User to register the repository
+                  description: Specify the GitHub Team or User to register the repository
                   ui:field: OwnerPicker
                   ui:options:
                     catalogFilter:
