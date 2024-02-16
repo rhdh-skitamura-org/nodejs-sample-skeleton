@@ -80,7 +80,7 @@ spec:
                   default: github.com
                   description: Specify the GitHub or GitLab host URL(e.g., github.com)
                 git_owner_name:
-                  title: GitHub Organization Name or User Name
+                  title: GitHub Team Name or User Name
                   type: string
                   description: Specify the GitHub Team or User to register the repository
                   ui:field: OwnerPicker
