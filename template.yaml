@@ -63,8 +63,10 @@ spec:
           description: This action will store the application source code on the selected Git server
           enum:
             - github
+            - gitlab
           enumNames:
             - GitHub
+            - GitLab
       dependencies:
         git:
           oneOf:
