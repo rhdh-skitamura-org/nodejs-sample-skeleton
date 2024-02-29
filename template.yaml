@@ -23,12 +23,20 @@ spec:
           default: "nodejs-sample"
           type: array
           ui:options:
-            rows: 3
             addable: false
             removable: false
             orderable: true
           items:
-            type: string
+            type: object
+            properties:
+              array:
+                title: Array string with default value
+                type: string
+                default: value3
+                enum:
+                  - value1
+                  - value2
+                  - value3
         description:
           title: Description
           type: string
