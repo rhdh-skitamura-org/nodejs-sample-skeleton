@@ -18,9 +18,9 @@ spec:
           type: array
           minItems: 3
           ui:options:
-            addable: true
-            orderable: true
-            removable: true
+            addable: false
+            orderable: false
+            removable: false
           items:
             type: string
             default: value3
