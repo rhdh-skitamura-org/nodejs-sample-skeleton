@@ -24,10 +24,10 @@ spec:
           items:
             type: string
             default: value3
-            enum:
-              - value1
-              - value2
-              - value3
+            #enum:
+            #  - value1
+            #  - value2
+            #  - value3
     - title: Provide information about the new component
       required:
         - app_name
