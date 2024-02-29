@@ -23,7 +23,10 @@ spec:
             removable: false
           items:
             type: string
-            default: value3
+            default: 
+              - value1
+              - value2
+              - value3
             #enum:
             #  - value1
             #  - value2
