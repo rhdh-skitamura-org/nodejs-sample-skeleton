@@ -21,6 +21,8 @@ spec:
           title: Repository Name
           type: string
           default: "nodejs-sample"
+          ui:options:
+            rows: 3
         description:
           title: Description
           type: string
