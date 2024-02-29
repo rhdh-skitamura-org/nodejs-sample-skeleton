@@ -19,7 +19,7 @@ spec:
           minItems: 3
           ui:options:
             addable: false
-            orderable: false
+            orderable: true
             removable: false
           items:
             type: string
