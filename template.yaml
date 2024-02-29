@@ -13,7 +13,7 @@ spec:
   parameters:
     - title: Fill in some steps
       properties:
-        arrayObjects:
+        array:
           title: Array with custom objects
           type: array
           minItems: 3
