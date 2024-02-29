@@ -22,6 +22,11 @@ spec:
           #type: string
           default: "nodejs-sample"
           type: array
+          ui:options:
+            rows: 3
+            addable: false
+            removable: false
+            orderable: true
           items:
             type: string
         description:
