@@ -19,11 +19,11 @@ spec:
       properties:
         app_name:
           title: Repository Name
-          type: string
+          #type: string
           default: "nodejs-sample"
-          ui:widget: textarea
-          ui:options:
-            rows: 3
+          type: array
+          items:
+            type: string
         description:
           title: Description
           type: string
