@@ -20,7 +20,11 @@ resources:
   - triggertemplate.yaml
   - el-route.yaml 
   - job-create-webhook.yaml
-  - external-secret-webhook.yaml
-  - external-secret-webhooksecret.yaml
-  - external-secret-sonar-settings.yaml 
-  - external-secret-basic-auth.yaml
+  #- external-secret-webhook.yaml
+  #- external-secret-webhooksecret.yaml
+  #- external-secret-sonar-settings.yaml 
+  #- external-secret-basic-auth.yaml
+  - es-basic-auth.yaml
+  - es-sonar-settings.yaml
+  - es-webhook-secret.yaml
+  - es-webhook.yaml
