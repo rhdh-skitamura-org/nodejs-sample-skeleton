@@ -12,6 +12,15 @@ metadata:
   - url: https://${{ values.app_name }}-${{ values.app_name }}-develop.${{ values.cluster_url }}
     title: Application
     icon: dashboard
+  - url: https://${{ values.git_host_url }}/${{ values.git_owner_name }}/${{ values.app_name }}-app
+    title: App Repository
+    icon: dashboard
+  - url: https://${{ values.git_host_url }}/${{ values.git_owner_name }}/${{ values.app_name }}-manifest
+    title: Manifest Repository
+    icon: dashboard
+  - url: https://console-openshift-console.${{ values.cluster_url }}/k8s/ns/${{ values.app_name }}-x-develop/tekton.dev~v1~Pipeline/${{ values.app_name }}-pipeline
+    title: Tekton Pipelines
+    icon: dashboard
   annotations:
     argocd/app-name: ${{ values.app_name }}-dev
     tektonci/build-namespace: ${{ values.app_name }}-develop
