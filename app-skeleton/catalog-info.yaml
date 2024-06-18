@@ -17,7 +17,9 @@ metadata:
     icon: dashboard
   - url: https://${{ values.git_host_url }}/${{ values.git_owner_name }}/${{ values.app_name }}-manifest
     title: Manifest Repository
-    icon: dashboard
+  - url: https://devspaces.${{ values.cluster_url }}/#https://${{ values.git_host_url }}/${{ values.git_owner_name }}/${{ values.app_name }}-app
+    title: OpenShift Dev Spaces (VS Code)
+    icon: web
   - url: https://console-openshift-console.${{ values.cluster_url }}/k8s/ns/${{ values.app_name }}-develop/tekton.dev~v1~Pipeline/${{ values.app_name }}-pipeline
     title: Tekton Pipelines
     icon: dashboard
