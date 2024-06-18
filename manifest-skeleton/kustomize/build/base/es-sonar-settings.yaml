@@ -11,5 +11,4 @@ spec:
   data:
   - secretKey: sonar-project.properties
     remoteRef:
-      key: sonar-project-properties 
-      property: sonar-project.properties
+      key: sonar-project.properties

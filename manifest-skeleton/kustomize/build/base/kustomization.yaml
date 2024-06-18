@@ -25,6 +25,6 @@ resources:
   #- external-secret-sonar-settings.yaml 
   #- external-secret-basic-auth.yaml
   - es-basic-auth.yaml
-  #- es-sonar-settings.yaml
+  - es-sonar-settings.yaml
   - es-webhook-secret.yaml
   - es-webhook.yaml
