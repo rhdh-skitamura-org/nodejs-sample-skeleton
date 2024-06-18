@@ -1,0 +1,29 @@
+schemaVersion: 2.0.0
+metadata:
+  name: ${{ values.app_name }}
+projects:
+  - name: ${{ values.app_name }}
+    source:
+      type: git
+      location: "https://${{ values.git_host_url }}/${{ values.git_owner_name }}/${{ values.app_name }}-app.git"
+components:
+  - name: nodejs
+    container:
+      image: quay.io/devspaces/node:14
+      memoryLimit: 512Mi
+      mountSources: true
+      endpoints:
+        - name: http-3000
+          targetPort: 3000
+commands:
+  - name: install
+    actions:
+      - type: exec
+        command: "npm install"
+        component: nodejs
+  - name: run
+    actions:
+      - type: exec
+        command: "npm start"
+        component: nodejs
+
