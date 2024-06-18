@@ -11,5 +11,4 @@ spec:
   data:
   - secretKey: env.yml
     remoteRef:
-      key: ${{ values.git }}_webhook
-      property: env.yml
+      key: env.yml
