@@ -94,19 +94,18 @@ spec:
     - name: IMAGE
       value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record:$(params.git-revision)
 
-  - name: test-container
+  - name: scan-image-rhacs
     taskRef:
-      name: trivy
+      name: stackrox-image-scan
     runAfter:
     - build-container
-    workspaces:
-    - name: cache
-      workspace: vul-cache
     params:
-    - name: IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record
-    - name: IMAGE_DIGEST
-      value: $(tasks.build-container.results.IMAGE_DIGEST)
+    - name: rox_central_endpoint
+      value: central.stackrox.svc:443
+    - name: image
+      value: image-registry.openshift-image-registry.svc:5000/nodejs-sample-demo-develop/nodejs-sample-demo-record@$(tasks.build-container.results.IMAGE_DIGEST)
+    - name: rox_api_token
+      value: rox-api-token
 
   - name: update-manifests
     taskRef:
