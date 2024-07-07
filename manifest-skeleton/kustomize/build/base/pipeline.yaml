@@ -111,7 +111,7 @@ spec:
     taskRef:
       name: sysdig
     runAfter:
-    - scan-app
+    - build-container
     params:
     - name: IMAGE
       value: image-registry.openshift-image-registry.svc:5000/nodejs-sample-demo-develop/nodejs-sample-demo-record
