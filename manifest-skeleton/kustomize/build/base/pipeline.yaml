@@ -90,7 +90,7 @@ spec:
       workspace: shared-workspace
     params:
     - name: IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}/${{ values.app_name }}-record:$(params.git-revision)
+      value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record:$(params.git-revision)
     - name: CONTEXT
       value: $(workspaces.source.path)
 
