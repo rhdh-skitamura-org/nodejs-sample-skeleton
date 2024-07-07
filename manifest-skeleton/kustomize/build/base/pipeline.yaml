@@ -81,7 +81,7 @@ spec:
 
   - name: build-container
     taskRef:
-      name: s2i-nodejs
+      name: buildah
       kind: ClusterTask
     runAfter:
     - scan-app
@@ -89,10 +89,10 @@ spec:
     - name: source
       workspace: shared-workspace
     params:
-    - name: PATH_CONTEXT
-      value: $(workspaces.source.path)
     - name: IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record:$(params.git-revision)
+      value: image-registry.openshift-image-registry.svc:5000/nodejs-sample-demo-develop/nodejs-sample-demo-record:$(params.git-revision)
+    - name: CONTEXT
+      value: $(workspaces.source.path)
 
   - name: scan-image-rhacs
     taskRef:
@@ -107,11 +107,26 @@ spec:
     - name: rox_api_token
       value: rox-api-token
 
+  - name: scan-image-sysdig
+    taskRef:
+      name: sysdig
+    runAfter:
+    - scan-app
+    params:
+    - name: IMAGE
+      value: image-registry.openshift-image-registry.svc:5000/nodejs-sample-demo-develop/nodejs-sample-demo-record
+    - name: IMAGE_DIGEST
+      value: $(tasks.build-container.results.IMAGE_DIGEST)
+    workspaces:
+    - name: db
+      workspace: shared-workspace
+
   - name: update-manifests
     taskRef:
       name: kustomize
     runAfter:
-    - test-container
+    - scan-image-sysdig
+    - scan-image-rhacs
     workspaces:
     - name: manifest-dir
       workspace: manifest-workspace
