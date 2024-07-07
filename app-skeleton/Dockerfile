@@ -1,7 +1,7 @@
 # Stage 1 - Install dependencies
 FROM registry.access.redhat.com/ubi9/nodejs-20-minimal:latest AS deps
 
-COPY package.json ./
+COPY package.json package-lock.json ./
 RUN npm ci
 
 # Stage 2 - Build the source code
