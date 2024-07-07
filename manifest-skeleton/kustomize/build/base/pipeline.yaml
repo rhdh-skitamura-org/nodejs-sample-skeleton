@@ -90,7 +90,7 @@ spec:
       workspace: shared-workspace
     params:
     - name: IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/nodejs-sample-demo-develop/nodejs-sample-demo-record:$(params.git-revision)
+      value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}/${{ values.app_name }}-record:$(params.git-revision)
     - name: CONTEXT
       value: $(workspaces.source.path)
 
@@ -103,7 +103,7 @@ spec:
     - name: rox_central_endpoint
       value: central.stackrox.svc:443
     - name: image
-      value: image-registry.openshift-image-registry.svc:5000/nodejs-sample-demo-develop/nodejs-sample-demo-record@$(tasks.build-container.results.IMAGE_DIGEST)
+      value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
     - name: rox_api_token
       value: rox-api-token
 
@@ -114,7 +114,7 @@ spec:
     - build-container
     params:
     - name: IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/nodejs-sample-demo-develop/nodejs-sample-demo-record
+      value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record
     - name: IMAGE_DIGEST
       value: $(tasks.build-container.results.IMAGE_DIGEST)
     workspaces:
