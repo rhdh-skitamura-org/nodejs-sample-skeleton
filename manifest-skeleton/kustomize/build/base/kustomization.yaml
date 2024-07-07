@@ -14,7 +14,7 @@ resources:
   - git-clone.yaml
   - kustomize.yaml
   - trivy.yaml
-  #- sysdig.yaml
+  - sysdig.yaml
   - stackrox-scan.yaml
   # preparations
   - tekton-pvc.yaml
@@ -30,5 +30,5 @@ resources:
   - es-sonar-settings.yaml
   - es-webhook-secret.yaml
   - es-webhook.yaml
-  #- es-sysdig-secure-token.yaml
+  - es-sysdig-secure-token.yaml
   - es-stackrox-api-token.yaml
