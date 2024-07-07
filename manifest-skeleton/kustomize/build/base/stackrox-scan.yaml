@@ -61,7 +61,7 @@ spec:
         set +x
         export NO_COLOR="True"
         curl -s -k -L -H "Authorization: Bearer $ROX_API_TOKEN" \
-          "https://$ROX_CENTRAL_ENDPOINT/api/cli/download/roxctl-linux" \
+          "https://mirror.openshift.com/pub/rhacs/assets/latest/bin/linux/roxctl" \
           --output ./roxctl  > /dev/null; echo "Getting roxctl"
         chmod +x ./roxctl > /dev/null
         echo $ROX_API_TOKEN 
