@@ -183,7 +183,7 @@ spec:
         visibility: private
         description: ${{ parameters.app_name }} image
         #token: ${{ parameters.quay_token }}
-        token: ZRP5QP9CMYY9RNK1EKONPXDB2CG5842I5NCLT6UKPBCT23Y5EWKKT9UQZSJAVOTE
+        token: gdcKRLQAxH5l8XwYVTzDuLl7W2bEC9eJXvF46l6r 
         baseUrl: http://quay-registry-quay-app.quay.svc
 
   output:
