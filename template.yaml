@@ -175,6 +175,16 @@ spec:
         username: ${{ parameters.sonarqube_username }}
         password: ${{ parameters.sonarqube_password }}
 
+    - id: create-quay-repository
+      name: Create Quay Repository
+      action: quay:create-repository
+      input:
+        name: ${{ parameters.app_name }}
+        visibility: private
+        #token: ${{ parameters.quay_token }}
+        token: K2DU1RGMQJ9UFFURWX18CMUVZ90L2JH4SK0NL0BKN2SHOVDIDFR2C24641RJDJT6 
+        baseUrl: http://quay-registry-quay-app.quay.svc
+
   output:
     links:
       - title: Open the Source Code Repository
