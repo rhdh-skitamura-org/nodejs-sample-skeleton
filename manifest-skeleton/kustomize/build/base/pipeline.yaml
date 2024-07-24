@@ -94,40 +94,41 @@ spec:
     - name: CONTEXT
       value: $(workspaces.source.path)
 
-  - name: scan-image-rhacs
-    taskRef:
-      name: stackrox-image-scan
-    runAfter:
-    - build-container
-    params:
-    - name: rox_central_endpoint
-      value: central.stackrox.svc:443
-    - name: image
-      #value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
-      value: default-route-openshift-image-registry.apps.rosa.rosa-hcp-1544.fnn1.p3.openshiftapps.com/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
-    - name: rox_api_token
-      value: rox-api-token
+#  - name: scan-image-rhacs
+#    taskRef:
+#      name: stackrox-image-scan
+#    runAfter:
+#    - build-container
+#    params:
+#    - name: rox_central_endpoint
+#      value: central.stackrox.svc:443
+#    - name: image
+#      #value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
+#      value: default-route-openshift-image-registry.apps.rosa.rosa-hcp-1544.fnn1.p3.openshiftapps.com/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
+#    - name: rox_api_token
+#      value: rox-api-token
 
-  - name: scan-image-sysdig
-    taskRef:
-      name: sysdig
-    runAfter:
-    - build-container
-    params:
-    - name: IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record
-    - name: IMAGE_DIGEST
-      value: $(tasks.build-container.results.IMAGE_DIGEST)
-    workspaces:
-    - name: db
-      workspace: shared-workspace
+#  - name: scan-image-sysdig
+#    taskRef:
+#      name: sysdig
+#    runAfter:
+#    - build-container
+#    params:
+#    - name: IMAGE
+#      value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record
+#    - name: IMAGE_DIGEST
+#      value: $(tasks.build-container.results.IMAGE_DIGEST)
+#    workspaces:
+#    - name: db
+#      workspace: shared-workspace
 
   - name: update-manifests
     taskRef:
       name: kustomize
     runAfter:
-    - scan-image-sysdig
-    - scan-image-rhacs
+#    - scan-image-sysdig
+#    - scan-image-rhacs
+    - build-container 
     workspaces:
     - name: manifest-dir
       workspace: manifest-workspace

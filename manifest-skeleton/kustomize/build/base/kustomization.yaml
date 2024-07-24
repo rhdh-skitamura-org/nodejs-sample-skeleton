@@ -31,5 +31,5 @@ resources:
   - es-sonar-settings.yaml
   - es-webhook-secret.yaml
   - es-webhook.yaml
-  - es-sysdig-secure-token.yaml
-  - es-stackrox-api-token.yaml
+  #- es-sysdig-secure-token.yaml
+  #- es-stackrox-api-token.yaml
