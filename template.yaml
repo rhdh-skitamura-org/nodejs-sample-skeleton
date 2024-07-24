@@ -179,7 +179,7 @@ spec:
       name: Create Quay Repository
       action: quay:create-repository
       input:
-        name: ${{ parameters.app_name }}
+        name: skitamura-quay-org/${{ parameters.app_name }}
         visibility: private
         description: ${{ parameters.app_name }} image
         #token: ${{ parameters.quay_token }}
