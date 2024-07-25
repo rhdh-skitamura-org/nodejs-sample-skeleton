@@ -95,7 +95,7 @@ spec:
     params:
     - name: IMAGE
       #value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record:$(params.git-revision)
-      value: http://quay-registry-quay-app.quay.svc/skitamura-quay-org/${{ values.app_name }}-develop/${{ values.app_name }}-record:$(params.git-revision)
+      value: quay-registry-quay-app.quay.svc/skitamura-quay-org/${{ values.app_name }}-develop/${{ values.app_name }}-record:$(params.git-revision)
     - name: CONTEXT
       value: $(workspaces.source.path)
 
