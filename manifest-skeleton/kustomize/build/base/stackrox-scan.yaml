@@ -60,7 +60,7 @@ spec:
         #!/usr/bin/env bash
         set +x
         export NO_COLOR="True"
-        echo "echo "Getting roxctl"
+        echo "Getting roxctl"
         curl --http1.1 -s -k -L -H "Authorization: Bearer $ROX_API_TOKEN" \
           "https://mirror.openshift.com/pub/rhacs/assets/latest/bin/linux/roxctl" \
           --output ./roxctl
