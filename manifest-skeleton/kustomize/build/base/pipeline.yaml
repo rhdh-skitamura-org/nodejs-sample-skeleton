@@ -110,7 +110,7 @@ spec:
     - name: rox_central_endpoint
       value: central.stackrox.svc:443
     - name: image
-      value: http://quay-registry-quay-app.quay.svc/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
+      value: quay-registry-quay-app.quay.svc/skitamura-quay-org/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
     - name: rox_api_token
       value: rox-api-token
 
