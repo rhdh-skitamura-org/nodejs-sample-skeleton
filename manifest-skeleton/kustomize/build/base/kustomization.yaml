@@ -33,3 +33,4 @@ resources:
   - es-webhook.yaml
   - es-sysdig-secure-token.yaml
   - es-stackrox-api-token.yaml
+  - es-quay-credentials.yaml
