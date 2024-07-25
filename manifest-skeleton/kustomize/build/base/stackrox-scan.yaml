@@ -60,9 +60,10 @@ spec:
         #!/usr/bin/env bash
         set +x
         export NO_COLOR="True"
+        echo "echo "Getting roxctl"
         curl -s -k -L -H "Authorization: Bearer $ROX_API_TOKEN" \
           "https://mirror.openshift.com/pub/rhacs/assets/latest/bin/linux/roxctl" \
-          --output ./roxctl  > /dev/null; echo "Getting roxctl"
+          --output ./roxctl
         chmod +x ./roxctl > /dev/null
         echo $ROX_API_TOKEN 
         echo $ROX_CENTRAL_ENDPOINT 
