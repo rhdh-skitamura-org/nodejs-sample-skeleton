@@ -98,7 +98,7 @@ spec:
       value: quay-registry-quay-app.quay.svc/skitamura-quay-org/${{ values.app_name }}-develop/${{ values.app_name }}-record:$(params.git-revision)
     - name: CONTEXT
       value: $(workspaces.source.path)
-    - name: PARAM_TLSVERIFY
+    - name: TLSVERIFY
       value: false
 
   - name: scan-image-rhacs
