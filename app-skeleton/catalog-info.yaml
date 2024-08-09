@@ -24,7 +24,7 @@ metadata:
     title: Tekton Pipelines
     icon: dashboard
   annotations:
-    argocd/app-name: ${{ values.app_name }}-dev
+    argocd/app-selector: argocd.argoproj.io/instance=${{ values.app_name }}-bootstrap
     tektonci/build-namespace: ${{ values.app_name }}-develop
     backstage.io/kubernetes-id: ${{ values.app_name }}
     backstage.io/kubernetes-namespace: ${{ values.app_name }}-develop
