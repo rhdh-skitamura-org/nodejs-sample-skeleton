@@ -112,7 +112,7 @@ spec:
       action: catalog:timestamping
       input:
         entityFilePath: "./tenant-app/catalog-info.yaml"
-        #writeToFile: "./tenant-app/catalog-info.yaml"
+        writeToFile: "./tenant-app/catalog-info.yaml"
 
     - id: publish-app-to-github
       if: ${{ parameters.git == "github" }}
