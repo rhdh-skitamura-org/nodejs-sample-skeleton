@@ -111,7 +111,8 @@ spec:
       name: Adds the backstage.io/createdAt annotation
       action: catalog:timestamping
       input:
-        writeToFile: ./tenant-app/catalog-info.yaml
+        entityFilePath: "./tenant-app/catalog-info.yaml"
+        writeToFile: "./tenant-app/catalog-info.yaml"
 
     - id: publish-app-to-github
       if: ${{ parameters.git == "github" }}
