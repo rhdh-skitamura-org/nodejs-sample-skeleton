@@ -106,6 +106,11 @@ spec:
           description: ${{ parameters.description }}
           cluster_url: ${{ parameters.cluster_url }}
         targetPath: ./tenant-app
+    
+    - id: timestamping
+      name: Adds the backstage.io/createdAt annotation
+      action: catalog:timestamping
+      writeToFile: ./tenant-app/catalog-info.yaml
 
     - id: publish-app-to-github
       if: ${{ parameters.git == "github" }}
@@ -146,9 +151,9 @@ spec:
         defaultBranch: develop
         protectDefaultBranch: false
 
-    - id: register-to-github
+    - id: register-catalog-from-github
       if: ${{ parameters.git == "github" }}
-      name: Registering the Catalog Info Component to GitHub
+      name: Registering the Catalog Info Component from GitHub
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['publish-app-to-github'].output.repoContentsUrl }}
@@ -174,6 +179,8 @@ spec:
         branch: main
         username: ${{ parameters.sonarqube_username }}
         password: ${{ parameters.sonarqube_password }}
+
+      
 
   output:
     links:
