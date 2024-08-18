@@ -11,24 +11,20 @@ spec:
   type: service
 
   parameters:
-    #- title: Provide information about the new component
-    - title: "日本語のチェック"
+    - title: Provide information about the new component
       required:
         - app_name
         - owner
         - system
       properties:
         app_name:
-          #title: Repository Name
-          title: "タイトル"
+          title: Repository Name
           type: string
-          #default: "nodejs-sample"
-          default: "ほげほげ"
+          default: "nodejs-sample"
         description:
           title: Description
           type: string
-          #description: Help others understand what this component is for
-          description: "ここは説明です" 
+          description: Help others understand what this component is for
         owner:
           title: Owner
           type: string
