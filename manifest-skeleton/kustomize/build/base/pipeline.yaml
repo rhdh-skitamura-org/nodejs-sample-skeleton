@@ -36,6 +36,9 @@ spec:
   - name: git-manifests-useremail  
     type: string
     description: Git Repo User Email for Manifests
+  - name: argocd-version
+    type: string
+    default: v2.11.6
 #  - name: git-manifests-user-access-token 
 #    type: string
 #    description: Git Repo User Access Token for Manifests
@@ -197,6 +200,8 @@ spec:
       name: argocd-task-sync-and-wait
     runAfter: 
     - push-manifests
-    workspaces:
-    
-    
+     params:
+    - name: application-name
+      value: ${{ values.app_name }}-dev
+    - name: argocd-version
+      value: $(params.argocd-version) 

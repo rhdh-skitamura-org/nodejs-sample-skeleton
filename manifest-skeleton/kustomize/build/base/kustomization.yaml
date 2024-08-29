@@ -16,6 +16,7 @@ resources:
   - trivy.yaml
   - sysdig.yaml
   - stackrox-scan.yaml
+  - argocd-sync.yaml
   # preparations
   - pipeline-sa.yaml
   - tekton-pvc.yaml
@@ -23,10 +24,7 @@ resources:
   - triggertemplate.yaml
   - el-route.yaml 
   - job-create-webhook.yaml
-  #- external-secret-webhook.yaml
-  #- external-secret-webhooksecret.yaml
-  #- external-secret-sonar-settings.yaml 
-  #- external-secret-basic-auth.yaml
+  # secrets
   - es-basic-auth.yaml
   - es-sonar-settings.yaml
   - es-webhook-secret.yaml
@@ -35,3 +33,5 @@ resources:
   - es-stackrox-api-token.yaml
   - es-quay-credentials.yaml
   - es-argocd-credentials.yaml
+  # configmaps
+  - cm-argocd.yaml
