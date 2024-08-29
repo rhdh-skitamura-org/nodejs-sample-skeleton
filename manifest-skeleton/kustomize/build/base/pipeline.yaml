@@ -39,6 +39,9 @@ spec:
   - name: argocd-version
     type: string
     default: v2.11.6
+  - name: image-registry
+    type: string
+    default: quay-registry-quay-app.quay.svc/skitamura-quay-org/${{ values.app_name }}-develop
 #  - name: git-manifests-user-access-token 
 #    type: string
 #    description: Git Repo User Access Token for Manifests
@@ -101,7 +104,7 @@ spec:
     params:
     - name: IMAGE
       #value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record:$(params.git-revision)
-      value: quay-registry-quay-app.quay.svc/skitamura-quay-org/${{ values.app_name }}-develop/${{ values.app_name }}-record:$(params.git-revision)
+      value: $(params.image-registry)/${{ values.app_name }}-record:$(params.git-revision)
     - name: CONTEXT
       value: $(workspaces.source.path)
     - name: TLSVERIFY
@@ -117,7 +120,7 @@ spec:
     - name: rox_central_endpoint
       value: central.stackrox.svc:443
     - name: image
-      value: quay-registry-quay-app.quay.svc/skitamura-quay-org/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
+      value: $(params.image-registry)/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
     - name: rox_api_token
       value: rox-api-token
 
@@ -149,11 +152,11 @@ spec:
     - name: KUSTOMIZE_SCRIPT
       value: |
         cd ./kustomize/app/overlays/dev
-        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
+        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=$(params.image-registry)/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
         cd ../stg
-        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
+        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=$(params.image-registry)/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
         cd ../prod
-        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
+        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=$(params.image-registry)/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
 
 
   - name: push-manifests
