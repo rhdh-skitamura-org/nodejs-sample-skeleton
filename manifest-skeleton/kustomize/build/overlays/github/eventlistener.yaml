@@ -11,7 +11,7 @@ spec:
         ref: ${{ values.app_name }}-pipeline-template
       interceptors:
       - ref:
-          name: github
+          name: ${{ values.git }}
           kind: ClusterInterceptor
         params:
         - name: "secretRef"
@@ -19,4 +19,9 @@ spec:
             secretName: github-webhooksecret
             secretKey: webhook_secret
         - name: "eventTypes"
+          {%- if values.git == 'github' %}
           value: ["push"]
+          {%- endif %}
+          {%- if values.git == 'gitlab' %}
+          value: ["Push Hook"]
+          {%- endif %}
