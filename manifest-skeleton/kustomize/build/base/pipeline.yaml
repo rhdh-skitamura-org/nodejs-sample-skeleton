@@ -191,3 +191,12 @@ spec:
 #        git add -A ./kustomize/app/overlays/
 #        git commit -m "[TEKTON-PIPELINES] Change container image in manifests."
 #        git push origin $(GIT_MANIFEST_REV)
+  - name: argocd-sync
+    taskRef:
+      kind: Task
+      name: argocd-task-sync-and-wait
+    runAfter: 
+    - push-manifests
+    workspaces:
+    
+    
