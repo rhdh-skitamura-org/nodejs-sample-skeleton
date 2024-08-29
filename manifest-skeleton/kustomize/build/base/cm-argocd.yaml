@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: argocd-env-configmap
 data:
-  ARGOCD_SERVER: "https://openshift-gitops-server-openshift-gitops.${{ values.cluster_url }}"
+  ARGOCD_SERVER: "openshift-gitops-server-openshift-gitops.${{ values.cluster_url }}:443"
