@@ -20,6 +20,7 @@ spec:
       containers:
       - image: ___IMAGE_URL___@___IMAGE_DIGEST___
         name: ${{ values.app_name }}
+        serviceAccount: ${{ values.app_name }}-sa
         ports:
         - containerPort: 3000
           protocol: TCP
