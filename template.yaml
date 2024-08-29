@@ -166,6 +166,7 @@ spec:
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
           description: ${{ parameters.description }}
+          cluster_url: ${{ parameters.cluster_url }}
         targetPath: ./tenant-manifest
 
     - id: publish-manifest-to-github
