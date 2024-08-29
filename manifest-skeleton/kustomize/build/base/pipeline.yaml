@@ -200,7 +200,7 @@ spec:
       name: argocd-task-sync-and-wait
     runAfter: 
     - push-manifests
-     params:
+    params:
     - name: application-name
       value: ${{ values.app_name }}-dev
     - name: argocd-version
