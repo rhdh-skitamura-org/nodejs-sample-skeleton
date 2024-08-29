@@ -41,7 +41,7 @@ spec:
     default: v2.11.6
   - name: image-registry
     type: string
-    default: quay-registry-quay-app.quay.svc.cluster.local/skitamura-quay-org/${{ values.app_name }}-develop
+    default: quay-registry-quay-app.quay.svc/skitamura-quay-org/${{ values.app_name }}-develop
 #  - name: git-manifests-user-access-token 
 #    type: string
 #    description: Git Repo User Access Token for Manifests
