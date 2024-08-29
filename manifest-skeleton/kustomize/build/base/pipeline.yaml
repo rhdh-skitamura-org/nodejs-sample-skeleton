@@ -204,4 +204,6 @@ spec:
     - name: application-name
       value: ${{ values.app_name }}-dev
     - name: argocd-version
-      value: $(params.argocd-version) 
+      value: $(params.argocd-version)
+    - name: revision
+      value: develop
