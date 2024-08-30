@@ -56,3 +56,6 @@ spec:
           - name: basic-auth
             secret:
               secretName: ${{ values.git }}-basic-auth
+          - name: quay-credentials
+            secret:
+              secretName: quay-credentials

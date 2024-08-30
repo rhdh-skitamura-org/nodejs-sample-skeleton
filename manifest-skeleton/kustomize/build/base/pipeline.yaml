@@ -16,6 +16,8 @@ spec:
     description: Temporary dir for git-cli Task
   - name: basic-auth
     description: .git-credentials file for git-cli Task
+  - name: quay-credentials
+    description: quay credentials file for build-container Task
   params:
   #- name: imageurl
   #  type: string
@@ -34,12 +36,19 @@ spec:
   - name: git-manifests-useremail  
     type: string
     description: Git Repo User Email for Manifests
+  - name: argocd-version
+    type: string
+    default: v2.11.6
+  - name: image-registry
+    type: string
+    default: quay-registry-quay-quay.apps.rosa.rosa-hcp-1544.fnn1.p3.openshiftapps.com/skitamura-quay-org/${{ values.app_name }}-develop
 #  - name: git-manifests-user-access-token 
 #    type: string
 #    description: Git Repo User Access Token for Manifests
   tasks:
   - name: git-clone-${{ values.app_name }}
     taskRef:
+      kind: Task
       name: git-clone
     params:
     - name: url
@@ -52,6 +61,7 @@ spec:
       
   - name: git-clone-${{ values.app_name }}-manifests
     taskRef:
+      kind: Task
       name: git-clone
     params:
     - name: url
@@ -64,6 +74,7 @@ spec:
 
   - name: scan-app
     taskRef:
+      kind: Task
       name: sonarqube-scanner
     runAfter:
     - git-clone-${{ values.app_name }}
@@ -88,25 +99,30 @@ spec:
     workspaces:
     - name: source
       workspace: shared-workspace
+    - name: dockerconfig
+      workspace: quay-credentials
     params:
     - name: IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record:$(params.git-revision)
+      #value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record:$(params.git-revision)
+      value: $(params.image-registry)/${{ values.app_name }}-record:$(params.git-revision)
     - name: CONTEXT
       value: $(workspaces.source.path)
+    - name: TLSVERIFY
+      value: 'false'
 
-#  - name: scan-image-rhacs
-#    taskRef:
-#      name: stackrox-image-scan
-#    runAfter:
-#    - build-container
-#    params:
-#    - name: rox_central_endpoint
-#      value: central.stackrox.svc:443
-#    - name: image
-#      #value: image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
-#      value: default-route-openshift-image-registry.apps.rosa.rosa-hcp-1544.fnn1.p3.openshiftapps.com/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
-#    - name: rox_api_token
-#      value: rox-api-token
+  - name: scan-image-rhacs
+    taskRef:
+      kind: Task
+      name: stackrox-image-scan
+    runAfter:
+    - build-container
+    params:
+    - name: rox_central_endpoint
+      value: central.stackrox.svc:443
+    - name: image
+      value: $(params.image-registry)/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
+    - name: rox_api_token
+      value: rox-api-token
 
 #  - name: scan-image-sysdig
 #    taskRef:
@@ -124,11 +140,11 @@ spec:
 
   - name: update-manifests
     taskRef:
+      kind: Task
       name: kustomize
     runAfter:
-#    - scan-image-sysdig
-#    - scan-image-rhacs
-    - build-container 
+    #- scan-image-sysdig
+    - scan-image-rhacs
     workspaces:
     - name: manifest-dir
       workspace: manifest-workspace
@@ -136,15 +152,16 @@ spec:
     - name: KUSTOMIZE_SCRIPT
       value: |
         cd ./kustomize/app/overlays/dev
-        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
+        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=$(params.image-registry)/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
         cd ../stg
-        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
+        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=$(params.image-registry)/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
         cd ../prod
-        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
+        kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=$(params.image-registry)/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
 
 
   - name: push-manifests
     taskRef:
+      kind: Task
       name: git-cli
     runAfter:
     - update-manifests
@@ -180,3 +197,16 @@ spec:
 #        git add -A ./kustomize/app/overlays/
 #        git commit -m "[TEKTON-PIPELINES] Change container image in manifests."
 #        git push origin $(GIT_MANIFEST_REV)
+  - name: argocd-sync
+    taskRef:
+      kind: Task
+      name: argocd-task-sync-and-wait
+    runAfter: 
+    - push-manifests
+    params:
+    - name: application-name
+      value: ${{ values.app_name }}-dev
+    - name: argocd-version
+      value: $(params.argocd-version)
+    - name: revision
+      value: develop

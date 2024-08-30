@@ -34,6 +34,7 @@ spec:
             catalogFilter:
               kind:
                 - Group
+                - User
         system:
           title: System
           type: string
@@ -88,6 +89,20 @@ spec:
                   type: string
                   description: Specify the GitHub Organization or User to register the repository
                   default: rhdh-skitamura-org
+            - properties:
+                git:
+                  enum:
+                    - gitlab
+                git_host_url:
+                  title: Git Host URL
+                  type: string
+                  default: gitlab.com
+                  description: Specify the GitLab or GitLab host URL(e.g., gitlab.com)
+                git_owner_name:
+                  title: GitLab Group Name or User Name
+                  type: string
+                  description: Specify the GitLab Group or User to register the repository
+                  default: rhdh-skitamura-group
   steps:
     - id: app-template
       name: Generating the Application Source Code Component
@@ -114,10 +129,28 @@ spec:
         entityFilePath: "./tenant-app/catalog-info.yaml"
         writeToFile: "./tenant-app/catalog-info.yaml"
 
+    - id: timestamping
+      name: Adds the backstage.io/createdAt annotation
+      action: catalog:timestamping
+      input:
+        entityFilePath: "./tenant-app/catalog-info.yaml"
+        writeToFile: "./tenant-app/catalog-info.yaml"
+
     - id: publish-app-to-github
       if: ${{ parameters.git == "github" }}
       name: Publish App Repository to GitHub
       action: publish:github
+      input:
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
+        repoVisibility: public
+        sourcePath: ./tenant-app
+        defaultBranch: develop
+        protectDefaultBranch: false
+    
+    - id: publish-app-to-gitlab
+      if: ${{ parameters.git == "gitlab" }}
+      name: Publish App Repository to GitLab
+      action: publish:gitlab
       input:
         repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
         repoVisibility: public
@@ -140,6 +173,7 @@ spec:
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
           description: ${{ parameters.description }}
+          cluster_url: ${{ parameters.cluster_url }}
         targetPath: ./tenant-manifest
 
     - id: publish-manifest-to-github
@@ -153,12 +187,31 @@ spec:
         defaultBranch: develop
         protectDefaultBranch: false
 
-    - id: register-catalog-from-github
+    - id: publish-manifest-to-gitlab
+      if: ${{ parameters.git == "gitlab" }}
+      name: Publish Manifest Repository to GitLab
+      action: publish:gitlab
+      input:
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
+        repoVisibility: public
+        sourcePath: ./tenant-manifest
+        defaultBranch: develop
+        protectDefaultBranch: false
+
+    - id: register-to-github
       if: ${{ parameters.git == "github" }}
       name: Registering the Catalog Info Component from GitHub
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['publish-app-to-github'].output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
+
+    - id: register-to-gitlab
+      if: ${{ parameters.git == "gitlab" }}
+      name: Registering the Catalog Info Component to GitLab
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish-app-to-gitlab'].output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
 
     - id: create-argocd-resources
@@ -182,14 +235,31 @@ spec:
         username: ${{ parameters.sonarqube_username }}
         password: ${{ parameters.sonarqube_password }}
 
-      
+    - id: create-quay-repository
+      name: Create Quay Repository
+      action: quay:create-repository
+      input:
+        name: ${{ parameters.app_name }}-develop/${{ parameters.app_name }}-record
+        visibility: private
+        description: ${{ parameters.app_name }} image
+        #token: ${{ parameters.quay_token }}
+        namespace: skitamura-quay-org
+        token: gdcKRLQAxH5l8XwYVTzDuLl7W2bEC9eJXvF46l6r 
+        baseUrl: http://quay-registry-quay-app.quay.svc
 
   output:
     links:
       - title: Open the Source Code Repository
         if: ${{ parameters.git == "github" }}
         url: ${{ steps['publish-app-to-github'].output.remoteUrl }}
+      - title: Open the Source Code Repository
+        if: ${{ parameters.git == "gitlab" }}
+        url: ${{ steps['publish-app-to-gitlab'].output.remoteUrl }}
       - title: Open the Catalog Info Component
         if: ${{ parameters.git == "github" }}
         icon: catalog
         entityRef: ${{ steps['register-to-github'].output.entityRef }}
+      - title: Open the Catalog Info Component
+        if: ${{ parameters.git == "gitlab" }}
+        icon: catalog
+        entityRef: ${{ steps['register-to-gitlab'].output.entityRef }}

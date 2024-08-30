@@ -11,4 +11,4 @@ spec:
   data:
   - secretKey: env.yml
     remoteRef:
-      key: env.yml
+      key: env-${{ values.git }}.yml
