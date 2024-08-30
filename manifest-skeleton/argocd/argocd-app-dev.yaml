@@ -33,7 +33,7 @@ spec:
       labels:
         createBy: rhdh-goldenpath
   ignoreDifferences:
-  - kind: Serviceaccount
+  - kind: ServiceAccount
     jsonPointers:
     - /imagePullSecrets
     - /secrets
