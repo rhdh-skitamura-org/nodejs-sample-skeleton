@@ -1,8 +1,8 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: nodejs-sample-app-template-develop
-  title: Create a Node.js sample application with a CI pipeline for development
+  name: nodejs-sample-app-template-for-demo
+  title: Create a Node.js sample application with a CI pipeline for Demo
   description: Provides the sample code and CI pipeline to build and deploy a sample application on OpenShift. 
   tags:
     - recommended
@@ -20,7 +20,7 @@ spec:
         app_name:
           title: Repository Name
           type: string
-          default: "nodejs-sample"
+          default: "nodejs-demo"
         description:
           title: Description
           type: string
@@ -121,6 +121,13 @@ spec:
           description: ${{ parameters.description }}
           cluster_url: ${{ parameters.cluster_url }}
         targetPath: ./tenant-app
+    
+    - id: timestamping
+      name: Adds the backstage.io/createdAt annotation
+      action: catalog:timestamping
+      input:
+        entityFilePath: "./tenant-app/catalog-info.yaml"
+        writeToFile: "./tenant-app/catalog-info.yaml"
 
     - id: timestamping
       name: Adds the backstage.io/createdAt annotation
@@ -193,7 +200,7 @@ spec:
 
     - id: register-to-github
       if: ${{ parameters.git == "github" }}
-      name: Registering the Catalog Info Component to GitHub
+      name: Registering the Catalog Info Component from GitHub
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['publish-app-to-github'].output.repoContentsUrl }}
