@@ -60,7 +60,7 @@ spec:
       required:
         - git
         - git_host_url
-        - git_owner_name
+        - git_group_name
       properties:
         git:
           title: Git of Destination
@@ -84,7 +84,7 @@ spec:
                   type: string
                   default: github.com
                   description: Specify the GitHub or GitLab host URL(e.g., github.com)
-                git_owner_name:
+                git_group_name:
                   title: GitHub Organization Name or User Name
                   type: string
                   description: Specify the GitHub Organization or User to register the repository
@@ -98,7 +98,7 @@ spec:
                   type: string
                   default: gitlab.com
                   description: Specify the GitLab or GitLab host URL(e.g., gitlab.com)
-                git_owner_name:
+                git_group_name:
                   title: GitLab Group Name or User Name
                   type: string
                   description: Specify the GitLab Group or User to register the repository
@@ -114,7 +114,7 @@ spec:
         values:
           git: ${{ parameters.git }}
           git_host_url: ${{ parameters.git_host_url }}
-          git_owner_name: ${{ parameters.git_owner_name }}
+          git_group_name: ${{ parameters.git_group_name }}
           app_name: ${{ parameters.app_name }}
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
@@ -141,7 +141,7 @@ spec:
       name: Publish App Repository to GitHub
       action: publish:github
       input:
-        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_group_name }}&repo=${{ parameters.app_name }}-app
         repoVisibility: public
         sourcePath: ./tenant-app
         defaultBranch: develop
@@ -152,7 +152,7 @@ spec:
       name: Publish App Repository to GitLab
       action: publish:gitlab
       input:
-        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_group_name }}&repo=${{ parameters.app_name }}-app
         repoVisibility: public
         sourcePath: ./tenant-app
         defaultBranch: develop
@@ -168,7 +168,7 @@ spec:
         values:
           git: ${{ parameters.git }}
           git_host_url: ${{ parameters.git_host_url }}
-          git_owner_name: ${{ parameters.git_owner_name }}
+          git_group_name: ${{ parameters.git_group_name }}
           app_name: ${{ parameters.app_name }}
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
@@ -181,7 +181,7 @@ spec:
       name: Publish Manifest Repository to GitHub
       action: publish:github
       input:
-        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_group_name }}&repo=${{ parameters.app_name }}-manifest
         repoVisibility: public
         sourcePath: ./tenant-manifest
         defaultBranch: develop
@@ -192,7 +192,7 @@ spec:
       name: Publish Manifest Repository to GitLab
       action: publish:gitlab
       input:
-        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_group_name }}&repo=${{ parameters.app_name }}-manifest
         repoVisibility: public
         sourcePath: ./tenant-manifest
         defaultBranch: develop
@@ -221,7 +221,7 @@ spec:
         appName: ${{ parameters.app_name }}-bootstrap
         argoInstance: main
         namespace: openshift-gitops
-        repoUrl: https://${{ parameters.git_host_url }}/${{ parameters.git_owner_name }}/${{ parameters.app_name }}-manifest.git
+        repoUrl: https://${{ parameters.git_host_url }}/${{ parameters.git_group_name }}/${{ parameters.app_name }}-manifest.git
         path: 'argocd/'
 
     - id: create-sonarqube-project

@@ -9,7 +9,7 @@ data:
         - /secrets/env.yml
       vars:
         git_host_url: ${{ values.git_host_url }}
-        git_owner: ${{ values.git_owner_name }}
+        git_group: ${{ values.git_group_name }}
         git_repo: ${{ values.app_name }}-app
         git_app: ${{ values.app_name }}-app
         #git_token: ""

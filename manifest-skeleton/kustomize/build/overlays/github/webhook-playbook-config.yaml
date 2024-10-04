@@ -10,13 +10,13 @@ data:
         - /secrets/env.yml
       vars:
         git_host_url: ${{ values.git_host_url }}
-        git_owner: ${{ values.git_owner_name }}
+        git_group: ${{ values.git_group_name }}
         git_repo: ${{ values.app_name }}-app
         webhook_url: "webhook-${{ values.app_name }}-el-${{ values.app_name }}-develop" 
       tasks:
         - name: Get current webhook
           uri:
-            url: "https://api.{{ git_host_url }}/repos/{{ git_owner }}/{{ git_repo }}/hooks" 
+            url: "https://api.{{ git_host_url }}/repos/{{ git_group }}/{{ git_repo }}/hooks" 
             method: GET
             return_content: true
             validate_certs: false
@@ -29,7 +29,7 @@ data:
         - name: Create webhook
           when: r_github_hooks.json | length == 0
           uri:
-            url: "https://api.{{ git_host_url }}/repos/{{ git_owner }}/{{ git_repo }}/hooks" 
+            url: "https://api.{{ git_host_url }}/repos/{{ git_group }}/{{ git_repo }}/hooks" 
             method: POST
             return_content: true
             validate_certs: false
@@ -59,7 +59,7 @@ data:
         - /secrets/env.yml
       vars:
         git_host_url: ${{ values.git_host_url }}
-        git_owner: ${{ values.git_owner_name }}
+        git_group: ${{ values.git_group_name }}
         git_repo: ${{ values.app_name }}-app
         git_app: ${{ values.app_name }}-app
         #git_token: ""
