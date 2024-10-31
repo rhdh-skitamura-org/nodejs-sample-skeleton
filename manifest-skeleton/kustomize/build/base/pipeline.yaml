@@ -126,7 +126,7 @@ spec:
 
   - name: scan-image-sysdig
     taskRef:
-      name: sysdig
+      name: sysdig-inline-scan
     runAfter:
     - build-container
     params:
